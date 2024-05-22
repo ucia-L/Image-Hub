@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ImageHub</title>
+    <link rel="stylesheet" href="static/css/indexMain.css"> <!-- 引入CSS样式文件 -->
+    <link rel="stylesheet" href="static/css/uploadPainting.css"> <!-- 引入CSS样式文件 -->
+    <!-- 引入Bootstrap样式 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Material Design Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="container-main">
+    <div th:replace="leftSlide"></div>
+    <div class="main-content">
+        <!-- 上方导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <h2 class="page-title">作品信息上传</h2>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="ml-auto d-flex align-items-center">
+                <a href="/homepage">
+                    <button class="btn btn-primary mt-2 mt-lg-0 mr-3" style="width: 140px" >返 回</button>
+                </a>
+                <div class="dropdown">
+                    <a class="nav-link" href="#" id="profileDropdown"> <!-- 触发菜单的链接 -->
+                        <img th:src="'static\\' + ${user.getAvatar()}" alt="profile" class="rounded-circle" width="50px" height="50px">
+                        <span class="nav-profile-name ml-2" th:text="${user.getNickname()}"></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 中间内容 -->
+        <div class="container-fluid">
+            <div class="card">
+                <div class="d-flex">
+                    <div class="image-container">
+                        <div class="image-wrapper">
+                            <img id="yourImage" src="static/image/upload.png" alt="Your Image">
+                            <div class="overlay overlay-upload" onclick="handleUploadClick()">
+                                <img src="static/image/upload.png" alt="upload Image" width="100px" height="100px">
+                                <input type="file" id="fileInput" style="display: none;" onchange="handleFileSelect(event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="/uploadPainting" method="post">
+                            <input id="imgName" type="hidden" name="fileName" value="">
+                            <div class="input-imgInfo">
+                                <div class="mb-3">
+                                    <label class="form-label">作品信息</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">title</label>
+                                    <input type="text" class="form-control" name="title" placeholder="Input placeholder">
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">文件大小</label>
+                                                <input id="file-size" type="text" class="form-control" name="size" placeholder="文件大小..." readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">文件格式</label>
+                                                <input id="file-format" type="text" class="form-control" name="format" placeholder="文件格式..." readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" style="margin-right: 20px">标签</label>
+                                    <div class="form-selectgroup form-selectgroup-pills">
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="0" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">VWP</span>
+                                        </label>
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="1" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">KAF</span>
+                                        </label>
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="2" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">RIM</span>
+                                        </label>
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="3" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">HARUSARUHI</span>
+                                        </label>
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="4" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">ISEKAIJOUCHO</span>
+                                        </label>
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="5" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">KOKO</span>
+                                        </label>
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="6" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">CIEL</span>
+                                        </label>
+                                        <label class="form-selectgroup-item">
+                                            <input type="checkbox" name="labels" value="7" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label">COMIC</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Textarea <span class="form-label-description"><span id="charCount">0</span>/500</span></label>
+                                    <textarea class="form-control" name="description" rows="12" id="descriptionTextArea" placeholder="关于你的作品，有什么想和大家介绍的吗？φ(≧ω≦*)♪ "></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="col-4 mb-3">
+                                                    <a href="#" class="btn btn-secondary btn-pill w-100">清空</a>
+                                                </div>
+                                                <div class="col-4 mb-3 text-end">
+                                                    <button type="submit" href="#" class="btn btn-info btn-pill w-100">提交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    function handleUploadClick() {
+        document.getElementById('fileInput').click(); // 触发文件选择器
+    }
+
+    function handleFileSelect(event) {
+        const file = event.target.files[0]; // 获取选定的文件
+        if (file) {
+            const formData = new FormData(); // 创建表单数据对象
+            formData.append('file', file); // 将选定的文件添加到表单数据对象中
+
+            // 使用 Axios 发送 POST 请求上传文件
+            axios.post('/saveTemp', formData)
+                .then(({ data }) => {
+                    if (data.success) {
+                        // 获取图片
+                        var imageElement = document.getElementById('yourImage');
+                        var fileSizeElement = document.getElementById('file-size');
+                        var fileFormatElement = document.getElementById('file-format');
+                        var imgNameElement = document.getElementById('imgName');
+
+                        // 更改图片的 src 属性
+                        imageElement.src = "data:image/png;base64," + data.image;
+                        imgNameElement.value = data.fileName;
+                        fileSizeElement.value = data.fileSize;
+                        fileFormatElement.value = data.fileFormat;
+
+                        alert("上传成功");
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('上传失败:', error);
+                });
+        }
+    }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const textArea = document.getElementById("descriptionTextArea");
+        const charCount = document.getElementById("charCount");
+
+        textArea.addEventListener("input", function() {
+            const count = textArea.value.length;
+            charCount.textContent = count;
+
+            // 如果需要限制字符数量为500，请解开以下注释，并将字符数限制为500
+            if (count > 500) {
+                textArea.value = textArea.value.substring(0, 500);
+                charCount.textContent = 500;
+            }
+        });
+    });
+
+</script>
+</html>

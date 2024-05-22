@@ -1,0 +1,129 @@
+.card {
+    display: flex;
+    height: 800px; /* 指定卡片容器的高度 */
+}
+
+.d-flex {
+    display: flex;
+    height: 100%; /* 使左右两个部分占据整体高度 */
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto; /* 不伸缩，固定宽度 */
+    width: 50%; /* 左侧占据整体宽度的50% */
+    overflow: hidden; /* 隐藏溢出内容 */
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 1px; /* 分割线的宽度 */
+    background-color: #ccc; /* 分割线颜色 */
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 保持图片比例，完整显示图片，可能留有空白 */
+    display: block; /* 去除图片默认底部空白 */
+}
+
+.card-body {
+    flex: 1; /* 右侧占据剩余空间 */
+    padding: 15px; /* 可根据需要调整 */
+}
+
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.overlay-upload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明遮罩颜色 */
+    opacity: 0; /* 默认隐藏 */
+    transition: opacity 0.3s ease; /* 添加渐变动画效果 */
+}
+
+.overlay-upload img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto; /* 将图片在父容器中居中 */
+}
+
+.overlay:hover {
+    opacity: 1; /* 鼠标悬停时显示遮罩 */
+    cursor: pointer; /* 鼠标样式为手型 */
+}
+
+.input-imgInfo {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+/* 复选框组样式 */
+.form-selectgroup {
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.form-selectgroup-item {
+    margin-right: 10px; /* 调整复选框之间的间距 */
+}
+
+.form-selectgroup-item:last-child {
+    margin-right: 0; /* 最后一个复选框取消右侧间距 */
+}
+
+.form-selectgroup-input {
+    display: none; /* 隐藏原始的复选框 */
+}
+
+/* 复选框外观 */
+.form-selectgroup-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #f0f0f0; /* 复选框背景颜色 */
+    border: 1px solid #ddd; /* 边框样式 */
+    border-radius: 20px; /* 圆角 */
+    cursor: pointer;
+}
+
+/* 选中复选框后的样式 */
+.form-selectgroup-input:checked + .form-selectgroup-label {
+    background-color: #007bff; /* 选中时的背景颜色 */
+    color: #fff; /* 选中时的文字颜色 */
+}
+
+.page-title {
+    font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    margin: 0;
+    font-size: 2.5rem;
+    line-height: 1.4;
+    font-weight: bold!important;
+    color: inherit;
+    display: flex;
+    align-items: center;
+}

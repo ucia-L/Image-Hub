@@ -1,0 +1,57 @@
+.card {
+    display: flex;
+    height: 800px; /* 设置卡片容器的高度 */
+    border: 1px solid #ccc; /* 添加边框用于显示效果 */
+}
+
+.d-flex {
+    display: flex;
+    height: 100%; /* 使左右两个部分占据整体高度 */
+}
+
+.image-container {
+    flex: 0 0 auto; /* 不伸缩，固定宽度 */
+    width: 50%; /* 左侧占据整体宽度的50% */
+    overflow: hidden; /* 隐藏溢出内容 */
+    position: relative;
+    display: flex; /* 使用 Flexbox */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    padding: 0 10px; /* 为了留出空间，添加内边距 */
+}
+
+.image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px; /* 分割线的宽度 */
+    background-color: #ccc; /* 分割线颜色 */
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 图片填充整个容器并保持比例 */
+    display: block; /* 去除图片默认底部空白 */
+}
+
+.card-body {
+    flex: 1; /* 右侧占据剩余空间 */
+    padding: 15px; /* 可根据需要调整 */
+}
+
+/* 基本标签样式 */
+.label-item {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 不同类型的标签样式 */
+.primary-item {
+    background-color: #3498db;
+    color: #fff;
+}

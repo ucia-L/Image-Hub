@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ImageHub</title>
+    <link rel="stylesheet" href="static/css/indexMain.css"> <!-- 引入CSS样式文件 -->
+    <link rel="stylesheet" href="static/css/checkBox.css"> <!-- 引入CSS样式文件 -->
+    <!-- 引入Bootstrap样式 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Material Design Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="container-main">
+    <div th:replace="leftSlideAdmin"></div>
+    <div class="main-content">
+        <!-- 上方导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <!-- 导航内容 -->
+                <!-- 居中导航 -->
+                <ul class="navbar-nav mr-lg-4 w-100">
+                    <li class="nav-item nav-search d-none d-lg-block w-100">
+                        <form action="/PHomepage" method="post">
+                        <div class="input-group">
+
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="search">
+                                    <button type="submit" style="border-style: none">
+                                        <i  class="mdi mdi-magnify"></i>
+                                    </button>
+                                </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search" name="title">
+
+                        </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="ml-auto d-flex align-items-center">
+                <a href="/uploadPaintingPage" style="display: none">
+                    <button class="btn btn-primary mt-2 mt-lg-0 mr-3" style="width: 140px">上传图片</button>
+                </a>
+                <div class="dropdown">
+                    <a class="nav-link" href="#" id="profileDropdown"> <!-- 触发菜单的链接 -->
+                        <img th:src="'static\\' + ${user.getAvatar()}" alt="profile" class="rounded-circle" width="50px" height="50px">
+                        <span class="nav-profile-name ml-2" th:text="${user.getNickname}"></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <div class="row g-2 align-items-center mb-n3" style="margin-bottom: 20px">
+                <div class="col-xl-1 mb-3 font-weight-semibold" style="font-weight: bold; margin-left: 20px">Label</div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=0" class="btn btn-primary w-100">
+                        # VWP
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=1" class="btn btn-secondary w-100">
+                        # KAF
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=2" class="btn btn-success w-100">
+                        # RIM
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=3" class="btn btn-warning w-100">
+                        # HARUSARUHI
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=4" class="btn btn-danger w-100">
+                        # ISEKAIJOUCHO
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=5" class="btn btn-info w-100">
+                        # KOKO
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=6" class="btn btn-light w-100" style="background-color: #f17ebb">
+                        # CIEL
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                    <a href="/OneHomepage?type=7" class="btn btn-dark w-100" style="background-color: #6018DC">
+                        # COMIC
+                    </a>
+                </div>
+            </div>
+        <!-- 中间内容 -->
+        <div class="container-fluid" style="margin-top: 20px">
+            <div class="row">
+                <div class="card-columns">
+                    <div class="card card-pin" th:each="painting : ${paintings}" th:id="${painting.getPid()}">
+                        <img class="card-img" th:if="${painting.getBaseImg64()!=null}" th:src="'data:image/jpeg;base64,' + ${painting.getBaseImg64()}" alt="Card image">
+                        <img class="card-img" th:unless="${painting.getBaseImg64()!=null}" th:src="'static\\' + ${painting.getUrl()}" alt="Card image">
+                        <div class="overlay" th:onclick="'deleteP(' + ${painting.getPid()} +  ')'">
+                            <h2 class="card-title title" style="flex: 1" th:text="${painting.getTitle()}"></h2>
+                            <div class="icon-container" style="grid-template-columns: repeat(1, 1fr);!important;">
+                                <i class="fas fa-trash" style="color: #000000; font-size: 100px; margin-bottom: 100px" ></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <img th:src="'static\\' + ${painting.getAvatar()}" width="40px" height="40px" style="margin-top: 5px; margin-bottom: 5px; margin-left: 5px;border-radius: 50px"></img>
+                                <div style="margin-left: 15px">
+                                    <div th:text="${painting.getNickname()}" style="font-weight: bold"></div>
+                                    <div class="text-muted" th:text="${painting.getUploadTime()}"></div>
+                                </div>
+                                <div class="ms-auto" th:text="${painting.getTitle()}" style="margin-left: auto; margin-right: 15px;font-weight: bold"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    function deleteP(pid) {
+        axios.post('/delete?pid=' + pid, {
+            pid: pid
+        }).then(({data}) => {
+            if(data.success) {
+                var elementToRemove = document.getElementById(pid);
+                if (elementToRemove) {
+                    elementToRemove.remove(); // 删除元素
+                    alert('删除成功'); // 显示删除成功的提示框
+                }
+
+            } else {
+                alert('删除失败')
+            }
+        })
+    }
+</script>
+<script src="static/js/TAndH.js"></script>
+</html>

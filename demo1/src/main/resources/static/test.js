@@ -1,0 +1,1 @@
+window.alert("欢迎来到GayHub全球最大同性交友网站")

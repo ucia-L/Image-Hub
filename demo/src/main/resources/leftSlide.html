@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="sidebar" th:fragment="leftSlide" style="background-color: #3b2561">
+    <!-- 带图片和文字的特殊导航栏项 -->
+    <div class="special-item">
+        <a href="/homepage">
+            <img src="static/image/logo.png" alt="特殊项图片">
+        </a>
+    </div>
+    <!-- 左侧导航栏 -->
+    <ul>
+        <li><a href="/homepage">首页</a></li>
+        <li><a href="/thumbUp">我的点赞</a></li>
+        <li><a href="/heart">我的收藏</a></li>
+        <li><a href="/PDownload">我的下载</a></li>
+        <li><a href="/working">我的作品</a></li>
+        <li><a href="/Personal">个人中心</a></li>
+        <!-- 添加其他导航项 -->
+    </ul>
+</div>
+</body>
+</html>

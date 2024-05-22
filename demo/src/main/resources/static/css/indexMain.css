@@ -1,0 +1,179 @@
+/* 基础样式 */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 容器样式 */
+.container-main {
+    display: flex;
+    height: 100vh; /* 设置高度为视口高度的100% */
+}
+
+/* 左侧导航栏样式 */
+.sidebar {
+    width: 15%; /* 左侧导航栏占据的宽度 */
+    background-color: #f1c0aa; /* 左侧导航栏背景颜色 */
+    padding: 20px;
+    /* 左边固定部分的样式 */
+    flex: 0 0 auto; /* 不随内容而变化 */
+    /* 添加其他样式，使左边固定 */
+}
+
+/* 特殊导航栏项样式 */
+.special-item {
+    margin-bottom: 50px; /* 调整与其他导航项的间距 */
+}
+
+.special-item a {
+    display: block;
+    padding: 5px; /* 调整内边距 */
+    text-decoration: none;
+    border-radius: 5px; /* 添加圆角 */
+}
+
+.special-item a img {
+    max-width: 230px; /* 设置图片最大宽度 */
+    display: block;
+    margin: 0 auto; /* 水平居中图片 */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #ecf0f1; /* 导航栏链接文字颜色 */
+    display: block;
+    padding: 10px 15px; /* 调整上下左右的内边距 */
+    font-size: 25px; /* 设置字体大小 */
+    line-height: 1.6; /* 设置行高 */
+    transition: all 0.3s ease; /* 添加过渡效果 */
+}
+
+.sidebar ul li a:hover {
+    --pink: #EEAD92;
+    --purple: #6018DC;
+    background-color: #6018DC; /* 作为备用方案的背景颜色 */
+   /*background-image: linear-gradient(90deg, var(--pink) 0%, var(--purple) 74%);*/
+    color: #ffffff; /* 悬停时的文字颜色 */
+    border-radius: 30px; /* 添加圆角 */
+}
+
+/* 右侧子页面样式 */
+.main-content {
+    width: 84%; /* 右侧主要内容区域占据整个页面的85% */
+    padding: 20px;
+    float: left; /* 右侧主要内容区域浮动到左侧 */
+    /* 右边可滚动部分的样式 */
+    flex: 1 1 auto; /* 可伸缩 */
+    overflow-y: auto; /* 垂直滚动 */
+    /* 添加其他样式，使右边可滚动 */
+}
+
+/* 上方导航栏样式 */
+.navbar {
+    padding: 5px; /* 导航栏内边距 */
+    overflow: hidden; /* 清除浮动 */
+}
+
+/* 中间内容样式 */
+.main-content-body {
+    padding: 20px; /* 内容区域内边距 */
+}
+
+/* 下方脚注样式 */
+.footer {
+    padding: 10px; /* 脚注内边距 */
+    clear: both; /* 清除浮动 */
+}
+
+/* 当输入框获得焦点时设置边框颜色 */
+.form-control:focus {
+    border-color: #e79c9c; /* 更改为您想要的颜色 */
+    box-shadow: 0 0 0 0.2rem rgba(246, 152, 152, 0.25); /* 可选的阴影效果 */
+}
+
+/* 隐藏下拉菜单 */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+/* 显示下拉菜单 */
+.show {
+    display: block;
+}
+
+
+.dropdown .dropdown-menu .dropdown-item {
+    font-size: .875rem;
+    padding: .25rem 1.5rem;
+}
+
+.dropdown .dropdown-menu .dropdown-item:active {
+    background: initial;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .2s ease;
+    background-color: #008CBA;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.icon-container i,
+.extra-icon i {
+    color: white; /* 将图标颜色设置为白色 */
+}
+
+.icon-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 创建三列等宽的网格 */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 4;
+}
+
+.icon-container i {
+    margin: 0 5px; /* 图标之间的间距 */
+    font-size: 50px; /* 调整图标大小 */
+}
+
+.extra-icon {
+    align-self: flex-end; /* 将其放置在底部 */
+    margin-right: 10px; /* 可以添加一些右边距 */
+    margin-bottom: 5px; /* 可以添加一些右边距 */
+}
+
+.extra-icon i {
+    font-size: 50px;
+}
+.card {border:0;}
+.card-pin:hover .overlay {
+    opacity: .5;
+    border: 5px solid #f3f3f3;
+    transition: ease .2s;
+    background-color: #43476e;
+}

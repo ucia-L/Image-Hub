@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ImageHub</title>
+    <link rel="stylesheet" href="static/css/indexMain.css"> <!-- 引入CSS样式文件 -->
+    <link rel="stylesheet" href="static/css/paintingP.css"> <!-- 引入CSS样式文件 -->
+    <!-- 引入Bootstrap样式 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Material Design Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="container-main">
+    <div th:replace="leftSlide"></div>
+    <div class="main-content">
+        <!-- 上方导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <h2 class="page-title">作品预览</h2>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="ml-auto d-flex align-items-center">
+                <a href="/homepage">
+                    <button class="btn btn-primary mt-2 mt-lg-0 mr-3" style="width: 140px">返 回</button>
+                </a>
+                <div class="dropdown">
+                    <a class="nav-link" href="#" id="profileDropdown"> <!-- 触发菜单的链接 -->
+                        <img th:src="'static\\' + ${user.getAvatar()}" alt="profile" class="rounded-circle" width="50px" height="50px">
+                        <span class="nav-profile-name ml-2" th:text="${user.getNickname()}"></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 中间内容 -->
+        <div class="container-fluid">
+            <div class="card">
+                <div class="d-flex">
+                    <div class="card-body d-flex flex-column">
+                        <p class="text-uppercase font-weight-bold" style="font-size: 32px">
+                            <a class="text-danger" href="#" th:text="${painting.getTitle()}"></a>
+                        </p>
+                        <h1 class="display-4 secondfont mb-3 font-weight-bold" th:text="${painting.getDescription()}" style="font-size: 1.35rem"></h1>
+                        <p class="mb-3" th:each="item : ${label}">
+                            <label class="label-item primary-item" th:text="${item}"></label>
+                        </p>
+                        <div class="row align-items-center mt-auto">
+                            <div class="col-1 d-flex align-items-center">
+                                <img class="rounded-circle" th:src="'static\\' + ${imgUser.getAvatar()}" width="50px" height="50px">
+                                <small class="ml-2" th:text="${imgUser.getNickname()}"><span class="text-muted d-block" th:text="${painting.getUploadTime().toString()}"></span></small>
+                            </div>
+                            <div class="col-11 d-flex justify-content-end" style="font-size: 32px;align-items: center">
+                                <i th:if="${!painting.isThumbUp()}" th:id="'thumbUpIcon_' + ${painting.getPid()}" class="fa fa-thumbs-up" aria-hidden="true" th:onclick="'handleThumbUpClick(' + ${painting.getPid()} + ')'" style="margin-right: 30px; color: #6c6b6b; border-radius: 50%;"></i> <!-- 点击触发事件 --><!-- 点赞图标 -->
+                                <i th:unless="${!painting.isThumbUp()}" th:id="'thumbUpIcon_' + ${painting.getPid()}" class="fa fa-thumbs-up" aria-hidden="true" style="margin-right: 30px; color: #ea6c80; border-radius: 50%;"></i> <!-- 点击触发事件 --><!-- 点赞图标 -->
+                                <i th:if="${!painting.isHeart()}" th:id="'heartIcon_' + ${painting.getPid()}" class="fa fa-heart" aria-hidden="true" th:onclick="'handleHeartClick(' + ${painting.getPid()} + ')'" style="margin-right: 30px; color: #6c6b6b; border-radius: 50%;"></i> <!-- 收藏图标 -->
+                                <i th:unless="${!painting.isHeart()}" th:id="'heartIcon_' + ${painting.getPid()}" class="fa fa-heart" aria-hidden="true" style="margin-right: 30px; color: red; border-radius: 50%;"></i> <!-- 收藏图标 -->
+                                <a th:href="'/download?url=' + ${painting.getUrl().substring(7)} + '&pid=' + ${painting.getPid()}" th:download="${painting.getUrl().substring(7)}">
+                                    <i class="fa fa-download" aria-hidden="true" style="color: #6c6b6b; border-radius: 50%;"></i> <!-- 下载图标 -->
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="image-container">
+                        <!-- 在这个例子中假设有一个变量 painting，其中包含了 getUrl() 方法来获取图片的 URL -->
+                        <!-- 通过 Thymeleaf 条件判断，根据 imgP 的存在与否设置不同的图片源 -->
+                        <img th:if="${imgP != null}" th:src="'data:image/jpeg;base64,' + ${imgP}" alt="Break Image">
+                        <img th:unless="${imgP != null}" th:src="'/static/' + ${painting.getUrl()}" alt="Break Image">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+<script src="static/js/TAndH.js"></script>
+</body>
+</html>

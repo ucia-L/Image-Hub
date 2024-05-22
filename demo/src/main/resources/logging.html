@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ImageHub</title>
+    <link rel="stylesheet" href="static/css/indexMain.css"> <!-- 引入CSS样式文件 -->
+    <link rel="stylesheet" href="static/css/paintingP.css"> <!-- 引入CSS样式文件 -->
+    <!-- 引入Bootstrap样式 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Material Design Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="container-main">
+    <div th:replace="leftSlideAdmin"></div>
+    <div class="main-content">
+        <!-- 上方导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <h2 class="page-title">日志预览</h2>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="ml-auto d-flex align-items-center">
+                <a href="/homepage">
+                    <button class="btn btn-primary mt-2 mt-lg-0 mr-3" style="width: 140px">返 回</button>
+                </a>
+                <div class="dropdown">
+                    <a class="nav-link" href="#" id="profileDropdown"> <!-- 触发菜单的链接 -->
+                        <img th:src="'static\\' + ${user.getAvatar()}" alt="profile" class="rounded-circle" width="50px" height="50px">
+                        <span class="nav-profile-name ml-2" th:text="${user.getNickname()}"></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 中间内容 -->
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Logging</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap datatable">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>操作者</th>
+                            <th>操作方式</th>
+                            <th>操作对象</th>
+                            <th>时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="log : ${logging}">
+                                <td><a href="#" class="text-reset" tabindex="-1" th:text="${log.getId()}"></a></td>
+                                <td>
+                                    <span class="flag flag-country-us"></span>
+                                    <text th:text="${log.getOperator()}"></text>
+                                </td>
+                                <td th:text="${log.getOperation()}">
+
+                                </td>
+                                <td th:text="${log.getTarget()}">
+
+                                </td>
+                                <td>
+                                    <span class="badge bg-success me-1"></span>
+                                    <text th:text="${log.getDateTime()}"></text>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+<script src="static/js/TAndH.js"></script>
+</body>
+</html>

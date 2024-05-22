@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ImageHub</title>
+    <link rel="stylesheet" href="static/css/indexMain.css"> <!-- 引入CSS样式文件 -->
+    <!-- 引入Bootstrap样式 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Material Design Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<div class="container-main">
+    <div th:replace="leftSlide"></div>
+    <div class="main-content">
+        <!-- 上方导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <!-- 导航内容 -->
+                <!-- 居中导航 -->
+                <ul class="navbar-nav mr-lg-4 w-100">
+                    <li class="nav-item nav-search d-none d-lg-block w-100">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text" id="search">
+                                <i class="mdi mdi-magnify"></i>
+                            </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="ml-auto d-flex align-items-center">
+                <a href="/uploadPaintingPage">
+                    <button class="btn btn-primary mt-2 mt-lg-0 mr-3" style="width: 140px">上传图片</button>
+                </a>
+                <div class="dropdown">
+                    <a class="nav-link" href="#" id="profileDropdown"> <!-- 触发菜单的链接 -->
+                        <img th:src="'static\\' + ${user.getAvatar()}" alt="profile" class="rounded-circle" width="50px" height="50px">
+                        <span class="nav-profile-name ml-2" th:text="${user.getNickname}"></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row g-2 align-items-center mb-n3" style="margin-bottom: 20px">
+            <div class="col-xl-1 mb-3 font-weight-semibold" style="font-weight: bold; margin-left: 20px">Label</div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=0" class="btn btn-primary w-100">
+                    # VWP
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=1" class="btn btn-secondary w-100">
+                    # KAF
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=2" class="btn btn-success w-100">
+                    # RIM
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=3" class="btn btn-warning w-100">
+                    # HARUSARUHI
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=4" class="btn btn-danger w-100">
+                    # ISEKAIJOUCHO
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=5" class="btn btn-info w-100">
+                    # KOKO
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=6" class="btn btn-light w-100" style="background-color: #f17ebb">
+                    # CIEL
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3">
+                <a href="/OneHomepage?type=7" class="btn btn-dark w-100" style="background-color: #6018DC">
+                    # COMIC
+                </a>
+            </div>
+        </div>
+
+        <!-- 中间内容 -->
+        <div class="container-fluid" style="margin-top: 20px">
+            <div class="row">
+                <div class="card-columns">
+                    <div class="card card-pin" th:each="painting : ${paintings}">
+                        <img class="card-img" th:if="${painting.getBaseImg64()!=null}" th:src="'data:image/jpeg;base64,' + ${painting.getBaseImg64()}" alt="Card image">
+                        <img class="card-img" th:unless="${painting.getBaseImg64()!=null}" th:src="'static\\' + ${painting.getUrl()}" alt="Card image">
+                        <div class="overlay" style="display: none">
+                            <h2 class="card-title title" style="flex: 1" th:text="${painting.getTitle()}"></h2>
+                            <div class="icon-container">
+                                <i th:id="'thumbUpIcon_' + ${painting.getPid()}" class="fa fa-thumbs-up" aria-hidden="true" th:onclick="'handleThumbUpClick(' + ${painting.getPid()} + ')'"></i> <!-- 点击触发事件 --><!-- 点赞图标 -->
+                                <i th:id="'heartIcon_' + ${painting.getPid()}"class="fa fa-heart" aria-hidden="true" th:onclick="'handleHeartClick(' + ${painting.getPid()} + ')'"></i> <!-- 收藏图标 -->
+                                <a th:href="'/download?url=' + ${painting.getUrl().substring(7)} + '&pid=' + ${painting.getPid()}" th:download="${painting.getUrl().substring(7)}">
+                                    <i class="fa fa-download" aria-hidden="true"></i> <!-- 下载图标 -->
+                                </a>
+                            </div>
+                            <div class="extra-icon">
+                                <a th:href="'/t?pid=' + ${painting.getPid()}">
+                                    <i class="fa fa-expand" aria-hidden="true"></i> <!-- 全屏图标 -->
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <img th:src="'static\\' + ${user.getAvatar()}" width="40px" height="40px" style="margin-top: 5px; margin-bottom: 5px; margin-left: 5px;border-radius: 50px"></img>
+                                <div style="margin-left: 15px">
+                                    <div th:text="${painting.getNickname()}" style="font-weight: bold"></div>
+                                    <div class="text-muted" th:text="${painting.getUploadTime()}"></div>
+                                </div>
+                                <div class="ms-auto" th:text="${painting.getTitle()}" style="margin-left: auto; margin-right: 10px;font-weight: bold"></div>
+                                <div style="margin-right: 5px;">
+                                    <a th:href="'/t?pid=' + ${painting.getPid()}">
+                                        <i class="fa fa-expand" style="color: #333333; font-size: 25px"></i> <!-- 全屏图标 -->
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="static/js/TAndH.js"></script>
+</html>

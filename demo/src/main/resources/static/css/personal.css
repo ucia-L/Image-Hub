@@ -1,0 +1,248 @@
+/* 全局样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #f8f8f8;
+}
+/* 头部样式 */
+header {
+    background-color: #24292e;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+/* 主体样式 */
+.container {
+    margin: 20px auto;
+    margin-bottom: 5px;
+    max-width: 960px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+}
+.avatar {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 5px solid #fff;
+    z-index: 2;
+}
+
+.name {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.bio {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.stats > div {
+    text-align: center;
+}
+.stats > div > h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.stats > div > p {
+    font-size: 16px;
+}
+
+.container-button {
+    align-items: center;
+    text-align: center;
+}
+
+/* 更多信息样式 */
+.container-more {
+    display: none;
+    margin: 20px auto;
+    max-width: 960px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    transition: height 0.5s ease; /* 添加过渡属性 */
+}
+
+/* 底部样式 */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #24292e;
+    color: #fff;
+}
+
+#signature {
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+.signature-button {
+    position: absolute;
+    background: transparent;
+    right: 315px;
+    top: 415px;
+    border: none;
+}
+
+.signature-button img {
+    width: 50px;
+    height: 50px;
+}
+
+.back-button {
+    position: absolute;
+    top: 3%;
+    height: 50px;
+    left: 5%;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.back-button img {
+    width: 30px;
+    height: 30px;
+}
+
+.back-button:hover {
+    color: #d1b6ff;
+}
+
+.container-button button {
+    margin: 10px auto;
+    width: 100px;
+    height: 50px;
+    border: 2px solid #ffffff; /* 添加边框样式 */
+    background-color: #ffffff; /* 设置背景颜色为白色 */
+    background-image: url("../img/Icon/收起.png");
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+    padding: 10px 20px; /* 添加内边距 */
+    color: #000000; /* 设置文字颜色 */
+    font-size: 16px; /* 设置文字大小 */
+    cursor: pointer; /* 添加指针样式 */
+    border-radius: 50px;
+}
+
+.show {
+    display: block;
+    height: auto;
+}
+
+.rotate {
+    transition: transform 0.5s ease-in-out; /* 添加过渡属性 */
+    transform: rotate(180deg);
+}
+
+.rotate {
+    transition: transform 0.5s ease-in-out; /* 添加过渡属性 */
+    transform: rotate(180deg);
+}
+
+/* 个人信息内容 */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #ddd;
+    height: 8px;
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #24292e;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.birth-container,
+.range-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.range-value {
+    font-weight: bold;
+}
+
+input[type="submit"] {
+    background-color: #24292e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}

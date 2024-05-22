@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+<p>欢迎来到GayHub全球最大同性交友网站</p>
+<p>用户名: <span id="username"></span></p>
+<p>密码: <span id="password"></span></p>
+<button onclick="getInfo()">click</button>
+<button onclick="login()">click</button>
+<div>
+    <form action="upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit">
+    </form>
+</div>
+<a href="download" download="test.png">下载最新资源</a>
+</body>
+</html>
+<script>
+    function getInfo() {
+        axios.get('/mvc/getData').then(({data}) => {
+            document.getElementById('username').innerText = data.username
+            document.getElementById('password').innerText = data.password
+        })
+    }
+
+</script>
+<script>
+    function login() {
+        axios.post('/mvc/login', {
+            username: 'test',
+            password: '123456'
+        }).then(({data}) => {
+            if(data.success) {
+                alert('登录成功')
+            } else {
+                alert('登录失败')
+            }
+        })
+    }
+</script>
